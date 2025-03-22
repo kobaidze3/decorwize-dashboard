@@ -15,7 +15,7 @@ const Index = () => {
           <div className="rounded-full bg-[var(--primary-color)] p-1.5">
             <Wallpaper className="h-5 w-5 text-white" />
           </div>
-          <h1 className="text-xl font-medium text-[var(--text-primary)]">DecorWise</h1>
+          <h1 className="text-xl font-medium text-[var(--text-primary)]">FloorStyle Pro</h1>
         </div>
         <div className="flex items-center gap-4">
           <Link to="/dashboard" className="text-[var(--text-primary)] hover:text-[var(--primary-color)] transition-colors">
@@ -39,24 +39,24 @@ const Index = () => {
         <div className="flex-1 space-y-6">
           <div className="inline-flex items-center gap-2 bg-[var(--primary-color)]/10 px-4 py-2 rounded-full text-sm font-medium text-[var(--primary-color)]">
             <Sparkles className="h-4 w-4" />
-            <span>Transform your space with AI</span>
+            <span>AI-powered solutions for flooring professionals</span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-[var(--text-primary)]">
-            Visualize Your Dream Space <span className="text-[var(--primary-color)]">Before You Decorate</span>
+            Boost Your <span className="text-[var(--primary-color)]">Flooring Business</span> with Visualization Tools
           </h2>
           <p className="text-lg text-[var(--text-secondary)] max-w-xl">
-            Use our AI-powered platform to see how wallpapers and interior designs will look in your space before making any purchases.
+            Help your customers visualize flooring and wallpaper products in their space with our AI tools. Close more sales with realistic previews.
           </p>
           <div className="flex flex-wrap gap-4 pt-4">
             <Link to="/dashboard">
               <AnimatedButton className="bg-[var(--primary-color)] text-white hover:bg-[var(--primary-color)]/90 px-6 py-3 rounded-lg">
-                Try it Now
+                Start Your Free Trial
                 <ArrowRight className="h-5 w-5" />
               </AnimatedButton>
             </Link>
             <Link to="/wallpapers">
               <Button variant="outline" className="border-[var(--primary-color)] text-[var(--primary-color)] hover:bg-[var(--primary-color)]/10 px-6 py-3 rounded-lg">
-                Browse Wallpapers
+                View Sample Visualizations
               </Button>
             </Link>
           </div>
@@ -66,7 +66,7 @@ const Index = () => {
           <BlurPanel className="w-full max-w-lg mx-auto overflow-hidden rounded-2xl shadow-lg border-[var(--primary-color)]/10">
             <img 
               src="https://images.unsplash.com/photo-1618220179428-22790b461013?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80" 
-              alt="Living room with beautiful wallpaper" 
+              alt="Living room with beautiful wallpaper and flooring" 
               className="w-full h-auto rounded-xl object-cover aspect-[4/3]" 
             />
           </BlurPanel>
@@ -77,24 +77,24 @@ const Index = () => {
       <section className="container mx-auto py-16 px-4">
         <div className="text-center mb-12">
           <h3 className="text-[var(--primary-color)] font-medium mb-3">FEATURES</h3>
-          <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">Transform Your Space with Our Tools</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">Grow Your Flooring Business</h2>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             {
-              title: "Wallpaper Visualization",
-              description: "Preview how any wallpaper will look on your walls before purchasing.",
+              title: "Flooring Visualization",
+              description: "Show customers exactly how hardwood, laminate, tile, or carpet will look in their space.",
               icon: <Wallpaper className="h-6 w-6 text-[var(--primary-color)]" />,
             },
             {
-              title: "Interior Design AI",
-              description: "Use our AI to suggest interior design elements that match your aesthetic.",
+              title: "Room Transformations",
+              description: "Upload customer room photos and instantly show different flooring and wallpaper options.",
               icon: <Home className="h-6 w-6 text-[var(--primary-color)]" />,
             },
             {
-              title: "Subscription Plans",
-              description: "Access premium features with our affordable subscription plans.",
+              title: "Business Growth Tools",
+              description: "Generate quotes, manage customer projects, and track your flooring installations.",
               icon: <CreditCard className="h-6 w-6 text-[var(--primary-color)]" />,
             }
           ].map((feature, index) => (
@@ -117,35 +117,35 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h3 className="text-[var(--primary-color)] font-medium mb-3">PRICING</h3>
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">Choose the Perfect Plan</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">Plans for Every Flooring Business</h2>
             <p className="mt-4 text-[var(--text-secondary)] max-w-xl mx-auto">
-              Select a plan that suits your needs. All plans include basic visualization features.
+              Whether you're a small contractor or a large flooring retailer, we have plans to fit your needs.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {[
               {
-                name: "Free",
-                price: "$0",
-                period: "forever",
-                features: ["5 Wallpaper Renders/month", "Basic Room Visualization", "Standard Support"],
+                name: "Contractor",
+                price: "$49",
+                period: "per month",
+                features: ["25 Visualization Projects", "Basic Material Library", "Customer Presentation Tools", "Email Support"],
                 highlighted: false,
                 buttonText: "Get Started",
               },
               {
-                name: "Pro",
-                price: "$9.99",
+                name: "Retailer",
+                price: "$99",
                 period: "per month",
-                features: ["Unlimited Renders", "Advanced Room Visualization", "Priority Support", "Custom Room Layouts"],
+                features: ["Unlimited Projects", "Premium Material Library", "Customer Portal Access", "Sales Team Management", "Priority Support"],
                 highlighted: true,
-                buttonText: "Try Pro",
+                buttonText: "Try Retailer Plan",
               },
               {
                 name: "Enterprise",
-                price: "$24.99",
+                price: "$249",
                 period: "per month",
-                features: ["All Pro Features", "API Access", "Dedicated Support", "Custom Branding"],
+                features: ["Multi-Location Support", "Custom Branding", "API Access", "Dedicated Account Manager", "White Label Options"],
                 highlighted: false,
                 buttonText: "Contact Sales",
               },
@@ -203,13 +203,13 @@ const Index = () => {
           <div className="absolute -z-10 top-0 right-0 w-64 h-64 bg-[var(--primary-color)]/20 rounded-full blur-3xl"></div>
           <div className="absolute -z-10 bottom-0 left-0 w-64 h-64 bg-[var(--accent-color)]/10 rounded-full blur-3xl"></div>
           
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[var(--text-primary)]">Ready to Transform Your Space?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[var(--text-primary)]">Grow Your Flooring Business Today</h2>
           <p className="text-[var(--text-secondary)] max-w-xl mx-auto mb-8">
-            Join thousands of users who have already transformed their homes with DecorWise.
+            Join hundreds of flooring professionals already using our tools to increase sales conversions by up to 40%.
           </p>
           <Link to="/dashboard">
             <AnimatedButton className="bg-[var(--primary-color)] text-white hover:bg-[var(--primary-color)]/90 px-8 py-3 rounded-lg">
-              Get Started Today
+              Start Your 14-Day Free Trial
               <ArrowRight className="h-5 w-5" />
             </AnimatedButton>
           </Link>
@@ -224,7 +224,7 @@ const Index = () => {
               <div className="rounded-full bg-[var(--primary-color)] p-1.5">
                 <Wallpaper className="h-5 w-5 text-white" />
               </div>
-              <h2 className="text-xl font-medium text-[var(--text-primary)]">DecorWise</h2>
+              <h2 className="text-xl font-medium text-[var(--text-primary)]">FloorStyle Pro</h2>
             </div>
             
             <div className="flex gap-8">
@@ -232,10 +232,10 @@ const Index = () => {
                 Dashboard
               </Link>
               <Link to="/wallpapers" className="text-[var(--text-secondary)] hover:text-[var(--primary-color)] transition-colors">
-                Wallpapers
+                Samples
               </Link>
               <Link to="/interiors" className="text-[var(--text-secondary)] hover:text-[var(--primary-color)] transition-colors">
-                Interiors
+                Visualizer
               </Link>
               <Link to="/subscriptions" className="text-[var(--text-secondary)] hover:text-[var(--primary-color)] transition-colors">
                 Pricing
@@ -244,7 +244,7 @@ const Index = () => {
           </div>
           
           <div className="border-t border-[var(--text-secondary)]/10 mt-8 pt-8 text-center text-[var(--text-secondary)]">
-            © {new Date().getFullYear()} DecorWise. All rights reserved.
+            © {new Date().getFullYear()} FloorStyle Pro. All rights reserved.
           </div>
         </div>
       </footer>
