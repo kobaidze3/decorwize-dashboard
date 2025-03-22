@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AnimatedButton } from "../ui-custom/AnimatedButton";
 import { BlurPanel } from "../ui-custom/BlurPanel";
-import { ChevronLeft, ChevronRight, LayoutDashboard, Wallpaper, Home } from "lucide-react";
+import { ChevronLeft, ChevronRight, LayoutDashboard, Wallpaper, Home, CreditCard } from "lucide-react";
 
 interface SidebarProps {
   className?: string;
@@ -29,6 +29,11 @@ const Sidebar = ({ className }: SidebarProps) => {
       name: "Interiors",
       path: "/interiors",
       icon: <Home className="h-5 w-5" />
+    },
+    {
+      name: "Subscriptions",
+      path: "/subscriptions",
+      icon: <CreditCard className="h-5 w-5" />
     }
   ];
 
@@ -49,10 +54,10 @@ const Sidebar = ({ className }: SidebarProps) => {
               collapsed ? "opacity-0" : "opacity-100"
             )}
           >
-            <div className="rounded-full bg-primary p-1.5">
+            <div className="rounded-full bg-[var(--primary-color)] p-1.5">
               <Wallpaper className="h-5 w-5 text-white" />
             </div>
-            <h1 className="text-xl font-medium">DecorWise</h1>
+            <h1 className="text-xl font-medium text-[var(--text-primary)]">DecorWise</h1>
           </div>
           <button
             onClick={() => setCollapsed(!collapsed)}
@@ -73,9 +78,9 @@ const Sidebar = ({ className }: SidebarProps) => {
               to={item.path}
               className={cn(
                 "flex items-center rounded-lg px-3 py-2.5 transition-all duration-200",
-                "hover:bg-muted/80 hover:text-primary",
+                "hover:bg-muted/80 hover:text-[var(--primary-color)]",
                 location.pathname === item.path
-                  ? "bg-primary/10 text-primary"
+                  ? "bg-[var(--primary-color)]/10 text-[var(--primary-color)]"
                   : "text-muted-foreground",
                 collapsed ? "justify-center" : "justify-start"
               )}
@@ -98,7 +103,8 @@ const Sidebar = ({ className }: SidebarProps) => {
             variant="outline"
             className={cn(
               "w-full justify-center",
-              collapsed ? "aspect-square p-2" : "px-4 py-2"
+              collapsed ? "aspect-square p-2" : "px-4 py-2",
+              "bg-[var(--primary-color)] text-white hover:bg-[var(--primary-color)]/90"
             )}
           >
             <Wallpaper className="h-5 w-5" />

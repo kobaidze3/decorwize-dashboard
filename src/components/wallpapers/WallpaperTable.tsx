@@ -175,12 +175,99 @@ const WallpaperTable = () => {
     });
   };
 
+  // Function to view all products in a collection directly without expanding
+  const viewAllInCollection = (collectionId: string) => {
+    // Find all products in this collection and show them
+    let productsFound = false;
+    
+    manufacturers.forEach(manufacturer => {
+      manufacturer.brands.forEach(brand => {
+        brand.collections.forEach(collection => {
+          if (collection.id === collectionId) {
+            productsFound = true;
+            // Toggle to ensure it's expanded
+            setExpandedCollections(prev => ({
+              ...prev,
+              [collectionId]: true
+            }));
+            
+            // Make sure parent brand is expanded
+            setExpandedBrands(prev => ({
+              ...prev,
+              [brand.id]: true
+            }));
+            
+            // Make sure manufacturer is expanded
+            setExpandedManufacturers(prev => ({
+              ...prev,
+              [manufacturer.id]: true
+            }));
+            
+            toast({
+              title: `${collection.name} Products`,
+              description: `Showing all ${collection.products.length} products in this collection`
+            });
+          }
+        });
+      });
+    });
+    
+    if (!productsFound) {
+      toast({
+        title: "No products found",
+        description: "This collection doesn't have any products yet",
+        variant: "destructive"
+      });
+    }
+  };
+  
+  // Function to view all collections in a brand directly
+  const viewAllInBrand = (brandId: string) => {
+    // Find the brand and show all its collections
+    let brand = null;
+    let manufacturer = null;
+    
+    manufacturers.forEach(m => {
+      m.brands.forEach(b => {
+        if (b.id === brandId) {
+          brand = b;
+          manufacturer = m;
+        }
+      });
+    });
+    
+    if (brand) {
+      // Toggle to ensure brand is expanded
+      setExpandedBrands(prev => ({
+        ...prev,
+        [brandId]: true
+      }));
+      
+      // Make sure manufacturer is expanded
+      setExpandedManufacturers(prev => ({
+        ...prev,
+        [manufacturer!.id]: true
+      }));
+      
+      toast({
+        title: `${brand.name} Collections`,
+        description: `Showing all ${brand.collections.length} collections in this brand`
+      });
+    } else {
+      toast({
+        title: "Brand not found",
+        description: "This brand doesn't exist or has been removed",
+        variant: "destructive"
+      });
+    }
+  };
+
   if (isLoading) {
     return (
       <BlurPanel className="w-full">
         <div className="flex justify-center items-center py-20">
           <div className="animate-spin-slow opacity-50">
-            <div className="h-12 w-12 border-t-2 border-primary rounded-full" />
+            <div className="h-12 w-12 border-t-2 border-[var(--primary-color)] rounded-full" />
           </div>
         </div>
       </BlurPanel>
@@ -190,7 +277,7 @@ const WallpaperTable = () => {
   return (
     <BlurPanel className="w-full">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-medium">Wallpaper Catalog</h2>
+        <h2 className="text-lg font-medium text-[var(--text-primary)]">Wallpaper Catalog</h2>
       </div>
       
       <div className="rounded-md border">
@@ -205,14 +292,21 @@ const WallpaperTable = () => {
           <TableBody>
             {manufacturers.map(manufacturer => (
               <>
-                <TableRow key={manufacturer.id} className="bg-accent/30">
+                <TableRow 
+                  key={manufacturer.id} 
+                  className="bg-[var(--secondary-color)]/40 cursor-pointer hover:bg-[var(--secondary-color)]"
+                  onClick={() => toggleManufacturer(manufacturer.id)}
+                >
                   <TableCell className="font-medium">
                     <div className="flex items-center">
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="p-1 mr-2"
-                        onClick={() => toggleManufacturer(manufacturer.id)}
+                        className="p-1 mr-2 text-[var(--primary-color)]"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleManufacturer(manufacturer.id);
+                        }}
                       >
                         {expandedManufacturers[manufacturer.id] ? (
                           <ChevronDown className="h-4 w-4" />
@@ -220,15 +314,19 @@ const WallpaperTable = () => {
                           <ChevronRight className="h-4 w-4" />
                         )}
                       </Button>
-                      <span>{manufacturer.name}</span>
+                      <span className="text-[var(--text-primary)]">{manufacturer.name}</span>
                     </div>
                   </TableCell>
-                  <TableCell>{manufacturer.brands.length} brands</TableCell>
+                  <TableCell className="text-[var(--text-secondary)]">{manufacturer.brands.length} brands</TableCell>
                   <TableCell className="text-right">
                     <Button
                       variant={manufacturer.isSubscribed ? "default" : "outline"}
                       size="sm"
-                      onClick={() => toggleSubscription('manufacturer', manufacturer.id)}
+                      className={manufacturer.isSubscribed ? "bg-[var(--primary-color)] hover:bg-[var(--primary-color)]/90" : ""}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleSubscription('manufacturer', manufacturer.id);
+                      }}
                     >
                       {manufacturer.isSubscribed ? (
                         <><Check className="h-3.5 w-3.5 mr-1" /> Subscribed</>
@@ -241,14 +339,21 @@ const WallpaperTable = () => {
                 
                 {expandedManufacturers[manufacturer.id] && manufacturer.brands.map(brand => (
                   <>
-                    <TableRow key={brand.id} className="bg-background">
+                    <TableRow 
+                      key={brand.id} 
+                      className="bg-background cursor-pointer hover:bg-[var(--secondary-color)]/20"
+                      onClick={() => viewAllInBrand(brand.id)}
+                    >
                       <TableCell className="font-medium">
                         <div className="flex items-center pl-8">
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="p-1 mr-2"
-                            onClick={() => toggleBrand(brand.id)}
+                            className="p-1 mr-2 text-[var(--primary-color)]"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleBrand(brand.id);
+                            }}
                           >
                             {expandedBrands[brand.id] ? (
                               <ChevronDown className="h-4 w-4" />
@@ -256,15 +361,19 @@ const WallpaperTable = () => {
                               <ChevronRight className="h-4 w-4" />
                             )}
                           </Button>
-                          <span>{brand.name}</span>
+                          <span className="text-[var(--text-primary)]">{brand.name}</span>
                         </div>
                       </TableCell>
-                      <TableCell>{brand.collections.length} collections</TableCell>
+                      <TableCell className="text-[var(--text-secondary)]">{brand.collections.length} collections</TableCell>
                       <TableCell className="text-right">
                         <Button
                           variant={brand.isSubscribed ? "default" : "outline"}
                           size="sm"
-                          onClick={() => toggleSubscription('brand', brand.id)}
+                          className={brand.isSubscribed ? "bg-[var(--primary-color)] hover:bg-[var(--primary-color)]/90" : ""}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleSubscription('brand', brand.id);
+                          }}
                         >
                           {brand.isSubscribed ? (
                             <><Check className="h-3.5 w-3.5 mr-1" /> Subscribed</>
@@ -277,14 +386,21 @@ const WallpaperTable = () => {
                     
                     {expandedBrands[brand.id] && brand.collections.map(collection => (
                       <>
-                        <TableRow key={collection.id} className="bg-muted/30">
+                        <TableRow 
+                          key={collection.id} 
+                          className="bg-muted/30 cursor-pointer hover:bg-[var(--secondary-color)]/30"
+                          onClick={() => viewAllInCollection(collection.id)}
+                        >
                           <TableCell className="font-medium">
                             <div className="flex items-center pl-16">
                               <Button
                                 variant="ghost"
                                 size="sm"
-                                className="p-1 mr-2"
-                                onClick={() => toggleCollection(collection.id)}
+                                className="p-1 mr-2 text-[var(--primary-color)]"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  toggleCollection(collection.id);
+                                }}
                               >
                                 {expandedCollections[collection.id] ? (
                                   <ChevronDown className="h-4 w-4" />
@@ -292,17 +408,30 @@ const WallpaperTable = () => {
                                   <ChevronRight className="h-4 w-4" />
                                 )}
                               </Button>
-                              <span>{collection.name}</span>
+                              <span className="text-[var(--text-primary)]">{collection.name}</span>
                             </div>
                           </TableCell>
-                          <TableCell>{collection.products.length} products</TableCell>
+                          <TableCell className="text-[var(--text-secondary)]">{collection.products.length} products</TableCell>
                           <TableCell className="text-right">
-                            {/* No action for collections */}
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                viewAllInCollection(collection.id);
+                              }}
+                            >
+                              View All
+                            </Button>
                           </TableCell>
                         </TableRow>
                         
                         {expandedCollections[collection.id] && collection.products.map(product => (
-                          <TableRow key={product.id} className="bg-background">
+                          <TableRow 
+                            key={product.id} 
+                            className="bg-background cursor-pointer hover:bg-[var(--secondary-color)]/10"
+                            onClick={() => selectWallpaper(product.id)}
+                          >
                             <TableCell className="font-medium">
                               <div className="flex items-center pl-24 gap-2">
                                 <div className="h-8 w-8 rounded bg-muted flex items-center justify-center overflow-hidden">
@@ -312,7 +441,7 @@ const WallpaperTable = () => {
                                     className="h-full w-full object-cover"
                                   />
                                 </div>
-                                <span>{product.name}</span>
+                                <span className="text-[var(--text-primary)]">{product.name}</span>
                               </div>
                             </TableCell>
                             <TableCell></TableCell>
@@ -320,7 +449,10 @@ const WallpaperTable = () => {
                               <Button
                                 variant="outline"
                                 size="sm"
-                                onClick={() => selectWallpaper(product.id)}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  selectWallpaper(product.id);
+                                }}
                               >
                                 Select
                               </Button>

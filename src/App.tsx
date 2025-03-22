@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Wallpapers from "./pages/Wallpapers";
 import Interiors from "./pages/Interiors";
+import Subscriptions from "./pages/Subscriptions";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,6 +22,7 @@ const App = () => (
           <Route path="/" element={<Dashboard />} />
           <Route path="/wallpapers" element={<Wallpapers />} />
           <Route path="/interiors" element={<Interiors />} />
+          <Route path="/subscriptions" element={<Subscriptions />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
