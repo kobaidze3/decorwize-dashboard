@@ -9,6 +9,7 @@ import Wallpapers from "./pages/Wallpapers";
 import Interiors from "./pages/Interiors";
 import Subscriptions from "./pages/Subscriptions";
 import NotFound from "./pages/NotFound";
+import Index from "./pages/Index";
 
 const queryClient = new QueryClient();
 
@@ -19,7 +20,8 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<Index />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/wallpapers" element={<Wallpapers />} />
           <Route path="/interiors" element={<Interiors />} />
           <Route path="/subscriptions" element={<Subscriptions />} />

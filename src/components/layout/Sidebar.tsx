@@ -30,7 +30,7 @@ const Sidebar = ({ className }: SidebarProps) => {
   const navItems = [
     {
       name: "Dashboard",
-      path: "/",
+      path: "/dashboard",
       icon: <LayoutDashboard className="h-5 w-5" />
     },
     {
