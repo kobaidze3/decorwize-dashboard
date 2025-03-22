@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { ArrowRight, Check, Sparkles, Wallpaper } from "lucide-react";
+import { ArrowRight, Check, Sparkles, Wallpaper, Home, CreditCard } from "lucide-react";
 import { Link } from "react-router-dom";
 import { BlurPanel } from "@/components/ui-custom/BlurPanel";
 import { AnimatedButton } from "@/components/ui-custom/AnimatedButton";
