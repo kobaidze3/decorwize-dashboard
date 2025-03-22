@@ -4,6 +4,7 @@ import { BlurPanel } from "@/components/ui-custom/BlurPanel";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
 
 const SubscriptionPlans = [
