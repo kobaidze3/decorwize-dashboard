@@ -1,10 +1,11 @@
 
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AnimatedButton } from "../ui-custom/AnimatedButton";
 import { BlurPanel } from "../ui-custom/BlurPanel";
 import { ChevronLeft, ChevronRight, LayoutDashboard, Wallpaper, Home, CreditCard } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface SidebarProps {
   className?: string;
@@ -13,6 +14,18 @@ interface SidebarProps {
 const Sidebar = ({ className }: SidebarProps) => {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
+  const isMobile = useIsMobile();
+
+  useEffect(() => {
+    // Auto-collapse on mobile
+    if (isMobile) {
+      setCollapsed(true);
+    }
+  }, [isMobile]);
+
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
 
   const navItems = [
     {
@@ -48,20 +61,20 @@ const Sidebar = ({ className }: SidebarProps) => {
         )}
       >
         <div className="flex items-center justify-between px-4 mb-6">
-          <div
-            className={cn(
-              "flex items-center gap-3 transition-opacity duration-300",
-              collapsed ? "opacity-0" : "opacity-100"
-            )}
-          >
-            <div className="rounded-full bg-[var(--primary-color)] p-1.5">
-              <Wallpaper className="h-5 w-5 text-white" />
+          {!collapsed && (
+            <div className="flex items-center gap-3">
+              <div className="rounded-full bg-[var(--primary-color)] p-1.5">
+                <Wallpaper className="h-5 w-5 text-white" />
+              </div>
+              <h1 className="text-xl font-medium text-[var(--text-primary)]">DecorWise</h1>
             </div>
-            <h1 className="text-xl font-medium text-[var(--text-primary)]">DecorWise</h1>
-          </div>
+          )}
           <button
-            onClick={() => setCollapsed(!collapsed)}
-            className="rounded-full p-1.5 hover:bg-muted transition-colors"
+            onClick={toggleCollapsed}
+            className={cn(
+              "rounded-full p-1.5 hover:bg-muted transition-colors",
+              collapsed ? "mx-auto" : ""
+            )}
           >
             {collapsed ? (
               <ChevronRight className="h-5 w-5" />
@@ -84,16 +97,14 @@ const Sidebar = ({ className }: SidebarProps) => {
                   : "text-muted-foreground",
                 collapsed ? "justify-center" : "justify-start"
               )}
+              title={collapsed ? item.name : ""}
             >
               {item.icon}
-              <span
-                className={cn(
-                  "ml-3 transition-all duration-300",
-                  collapsed ? "w-0 opacity-0" : "w-auto opacity-100"
-                )}
-              >
-                {item.name}
-              </span>
+              {!collapsed && (
+                <span className="ml-3">
+                  {item.name}
+                </span>
+              )}
             </Link>
           ))}
         </div>
@@ -103,19 +114,17 @@ const Sidebar = ({ className }: SidebarProps) => {
             variant="outline"
             className={cn(
               "w-full justify-center",
-              collapsed ? "aspect-square p-2" : "px-4 py-2",
+              collapsed ? "p-2" : "px-4 py-2",
               "bg-[var(--primary-color)] text-white hover:bg-[var(--primary-color)]/90"
             )}
+            title={collapsed ? "Visualize" : ""}
           >
             <Wallpaper className="h-5 w-5" />
-            <span
-              className={cn(
-                "ml-2 transition-all duration-300",
-                collapsed ? "w-0 opacity-0" : "w-auto opacity-100"
-              )}
-            >
-              Visualize
-            </span>
+            {!collapsed && (
+              <span className="ml-2">
+                Visualize
+              </span>
+            )}
           </AnimatedButton>
         </div>
       </BlurPanel>
